@@ -8,7 +8,19 @@ Completed static elaboration
 Starting simulation data flow analysis
 Completed simulation data flow analysis
 Time Resolution for simulation is 1ps
+Compiling module xil_defaultlib.initial_permutation
 Compiling module xil_defaultlib.expansion_pbox
+Compiling module xil_defaultlib.S_box_pre_calculation
+Compiling module xil_defaultlib.S8
+Compiling module xil_defaultlib.S7
+Compiling module xil_defaultlib.S6
+Compiling module xil_defaultlib.S5
+Compiling module xil_defaultlib.S4
+Compiling module xil_defaultlib.S3
+Compiling module xil_defaultlib.S2
+Compiling module xil_defaultlib.S1
+Compiling module xil_defaultlib.Calculate_SBOX
+Compiling module xil_defaultlib.DES_Implementation
 Compiling module xil_defaultlib.simulation
 Compiling module xil_defaultlib.glbl
 Built simulation snapshot simulation_behav

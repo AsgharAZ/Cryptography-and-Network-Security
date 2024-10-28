@@ -3,5 +3,17 @@ INFO: [VRFC 10-311] analyzing module DES_Implementation
 INFO: [VRFC 10-311] analyzing module initial_permutation
 INFO: [VRFC 10-311] analyzing module final_permutation
 INFO: [VRFC 10-311] analyzing module expansion_pbox
+INFO: [VRFC 10-311] analyzing module xor_48bit
+INFO: [VRFC 10-311] analyzing module Calculate_SBOX
+INFO: [VRFC 10-311] analyzing module S_box_pre_calculation
+INFO: [VRFC 10-311] analyzing module S1
+INFO: [VRFC 10-311] analyzing module S2
+INFO: [VRFC 10-311] analyzing module S3
+INFO: [VRFC 10-311] analyzing module S4
+INFO: [VRFC 10-311] analyzing module S5
+INFO: [VRFC 10-311] analyzing module S6
+INFO: [VRFC 10-311] analyzing module S7
+INFO: [VRFC 10-311] analyzing module S8
+INFO: [VRFC 10-311] analyzing module Straight_permutation
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/DELL/OneDrive - Habib University/Pictures/work/University/Semester 7/Cryptography/Labs/Lab 10/project_1/project_1.srcs/sim_1/new/Simulation.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module simulation
