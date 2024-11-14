@@ -1,3 +1,102 @@
 Vivado Simulator 2020.1
 Time resolution is 1 ps
-$finish called at time : 20 ns : File "C:/Users/DELL/OneDrive - Habib University/Pictures/work/University/Semester 7/Cryptography/Labs/Lab 10/project_1/project_1.srcs/sim_1/new/Simulation.v" Line 41
+Starting DES Simulation...
+Initial Input: 123456abcd132536
+Round 1 Results:
+  Expansion Output (exp_out): 8f16540f155a
+  After Key XOR (AK): 965a847dcbd6
+  S-Box Output (SBOX_out): 8afe657e
+  Straight Permutation (SP): 4edf35ec
+  Round 1 Output: 18ca18ad5a78e394
+Round 2 Results:
+  Expansion Output (exp_out): 2f43f1707ca8
+  After Key XOR (AK): 6a2ba96ac066
+  S-Box Output (SBOX_out): 9e0a0cd1
+  Straight Permutation (SP): 52d8085b
+  Round 2 Output: 5a78e3944a1210f6
+Round 3 Results:
+  Expansion Output (exp_out): 2540a40a17ac
+  After Key XOR (AK): 23ad00a6e219
+  S-Box Output (SBOX_out): 232713fa
+  Straight Permutation (SP): ea727605
+  Round 3 Output: 4a1210f6b00a9591
+Round 4 Results:
+  Expansion Output (exp_out): da00554abca3
+  After Key XOR (AK): 002d5661d240
+  S-Box Output (SBOX_out): e1e5d34d
+  Straight Permutation (SP): a9b5fb24
+  Round 4 Output: b00a9591e3a7ebd2
+Round 5 Results:
+  Expansion Output (exp_out): 707d0ff57ea5
+  After Key XOR (AK): 19db260bb7b6
+  S-Box Output (SBOX_out): 1b30c01a
+  Straight Permutation (SP): 4f0e4006
+  Round 5 Output: e3a7ebd2ff04d597
+Round 6 Results:
+  Expansion Output (exp_out): ffe8096abcaf
+  After Key XOR (AK): 3e7c87edfbf1
+  S-Box Output (SBOX_out): a115487f
+  Straight Permutation (SP): 9e965e20
+  Round 6 Output: ff04d5977d31b5f2
+Round 7 Results:
+  Expansion Output (exp_out): 3fa9a3dabfa4
+  After Key XOR (AK): 4f2371070c64
+  S-Box Output (SBOX_out): 6869e794
+  Straight Permutation (SP): 832da2ed
+  Round 7 Output: 7d31b5f27c29777a
+Round 8 Results:
+  Expansion Output (exp_out): 3f8152baebf4
+  After Key XOR (AK): 0b79704a2d99
+  S-Box Output (SBOX_out): 4cdf5e8a
+  Straight Permutation (SP): bc6f9159
+  Round 8 Output: 7c29777ac15e24ab
+Round 9 Results:
+  Expansion Output (exp_out): e02afc109557
+  After Key XOR (AK): 6491b863499b
+  S-Box Output (SBOX_out): 9fe5d4de
+  Straight Permutation (SP): eb9f513f
+  Round 9 Output: c15e24ab97b62645
+Round 10 Results:
+  Expansion Output (exp_out): cafdac10c20b
+  After Key XOR (AK): c88bfb1877b4
+  S-Box Output (SBOX_out): c677121a
+  Straight Permutation (SP): eee39014
+  Round 10 Output: 97b626452fbdb4bf
+Round 11 Results:
+  Expansion Output (exp_out): 95fdfbda95fe
+  After Key XOR (AK): f8a89b75e95b
+  S-Box Output (SBOX_out): 0b6a8bde
+  Straight Permutation (SP): 5b7b6065
+  Round 11 Output: 2fbdb4bfcccd4620
+Round 12 Results:
+  Expansion Output (exp_out): 65965aa0c101
+  After Key XOR (AK): a757b3ca8af2
+  S-Box Output (SBOX_out): 47849246
+  Straight Permutation (SP): 6132d130
+  Round 12 Output: cccd46204e8f658f
+Round 13 Results:
+  Expansion Output (exp_out): a5d45eb0bc5e
+  After Key XOR (AK): 3c174d277541
+  S-Box Output (SBOX_out): a3f04751
+  Straight Permutation (SP): 46b56b0c
+  Round 13 Output: 4e8f658f8a782d2c
+Round 14 Results:
+  Expansion Output (exp_out): 4543f015a959
+  After Key XOR (AK): 60587bd2be89
+  S-Box Output (SBOX_out): 5417c55a
+  Straight Permutation (SP): 8f56b01a
+  Round 14 Output: 8a782d2cc1d9d595
+Round 15 Results:
+  Expansion Output (exp_out): e03ef3eabcab
+  After Key XOR (AK): d30e36331fc6
+  S-Box Output (SBOX_out): 955ebbc4
+  Straight Permutation (SP): 35f170f3
+  Round 15 Output: c1d9d595bf895ddf
+Round 16 Results:
+  Expansion Output (exp_out): dffc52afbeff
+  After Key XOR (AK): c7e00fda7892
+  S-Box Output (SBOX_out): 5fa35c49
+  Straight Permutation (SP): f85cc91e
+  Round 16 Output: bf895ddf39851c8b
+Final Output (Data Out): zzzzzzzzzzzzzzzz
+$finish called at time : 180 ns : File "C:/Users/DELL/OneDrive - Habib University/Pictures/work/University/Semester 7/Cryptography/Labs/Lab 10/project_1/project_1.srcs/sim_1/new/Simulation.v" Line 92

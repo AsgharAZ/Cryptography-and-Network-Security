@@ -20,7 +20,8 @@ Compiling module xil_defaultlib.S3
 Compiling module xil_defaultlib.S2
 Compiling module xil_defaultlib.S1
 Compiling module xil_defaultlib.Calculate_SBOX
-Compiling module xil_defaultlib.DES_Implementation
+Compiling module xil_defaultlib.Straight_permutation
+Compiling module xil_defaultlib.DES_Implementation_default
 Compiling module xil_defaultlib.simulation
 Compiling module xil_defaultlib.glbl
 Built simulation snapshot simulation_behav

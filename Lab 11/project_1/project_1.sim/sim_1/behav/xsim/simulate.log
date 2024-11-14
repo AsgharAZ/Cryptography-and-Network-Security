@@ -1,0 +1,8 @@
+Vivado Simulator 2020.1
+Time resolution is 1 ps
+Public Key (e, n): (        13,         77)
+Private Key (d):         37
+Plaintext:  26
+Ciphertext:  75
+Decrypted Text:  26
+$finish called at time : 220 ns : File "C:/Users/DELL/OneDrive - Habib University/Pictures/work/University/Semester 7/Cryptography/Labs/Lab 11/project_1/project_1.srcs/sim_1/new/simulation.v" Line 38

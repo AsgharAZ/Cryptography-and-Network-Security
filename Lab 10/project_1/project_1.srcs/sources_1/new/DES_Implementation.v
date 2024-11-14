@@ -1,5 +1,5 @@
 `timescale 1ns / 1ps
-module DES_Implementation(
+module DES_Implementation2(
     input [0:63] Input,
     input[0:47] K1,K2,K3,K4,K5,K6,K7,K8,K9,K10,K11,K12,K13,K14,K15,K16,
     output [0:63] Output
@@ -11,27 +11,124 @@ module DES_Implementation(
     initial_permutation IP1 (Input,ip);
     
     //Before key
-    wire [0:47] BK1,BK2,BK3,BK4,BK5,BK6,BK7,BK8,BK9,BK10,BK11,BK12,BK13,BK14,BK15,BK16;
+    //wire [0:47] BK1,BK2,BK3,BK4,BK5,BK6,BK7,BK8,BK9,BK10,BK11,BK12,BK13,BK14,BK15,BK16;
     //After key
     wire [0:47] AK1,AK2,AK3,AK4,AK5,AK6,AK7,AK8,AK9,AK10,AK11,AK12,AK13,AK14,AK15,AK16;
     //Before XORing finally at the end
     wire [0:31] BL1,BL2,BL3,BL4,BL5,BL6,BL7,BL8,BL9,BL10,BL11,BL12,BL13,BL14,BL15,BL16;
+    // After Straight Permutation
+    wire [0:31] SP1,SP2,SP3,SP4,SP5,SP6,SP7,SP8,SP9,SP10,SP11,SP12,SP13,SP14,SP15,SP16;
     
     //after permutation dividing into 2 parts
     assign L0 = ip[0:31];
     assign R0 = ip[31:63];
     
     assign L1 = R0;
-    //getting through expansion key-box then xor'ing
-    expansion_pbox Exp1(R0,BK1);
-    assign AK1 = BK1 ^ K1;
+    //getting through expansion key-bo  x then xor'ing
+    wire [0:48] exp_o;
+    expansion_pbox Exp1(R0,exp_o); //k
+    assign AK1 = exp_o ^ K1; //Xor expansion P-box value with K1
     
     Calculate_SBOX SB1(AK1, BL1);
-    assign R1 = L0 ^ BL1;
-    
+    //straight P-box (XOR with l_0)
+    Straight_permutation StraightP1(BL1, SP1);
+    assign R1 = L0 ^ SP1;
     assign Output = {L1,R1};
     
 endmodule
+
+module DES_Implementation(
+    input [0:63] Input,
+    input [0:47] K1, K2, K3, K4, K5, K6, K7, K8, K9, K10, K11, K12, K13, K14, K15, K16,
+    output [0:63] Output,
+    output [0:63] Round1Output, Round2Output, Round3Output, Round4Output,
+    output [0:63] Round5Output, Round6Output, Round7Output, Round8Output,
+    output [0:63] Round9Output, Round10Output, Round11Output, Round12Output,
+    output [0:63] Round13Output, Round14Output, Round15Output, Round16Output
+    );
+
+    wire [0:31] L[0:16];  // Left parts for each round
+    wire [0:31] R[0:16];  // Right parts for each round
+    wire [0:63] ip;       // Initial Permutation output
+
+    // Initial Permutation
+    initial_permutation IP1(Input, ip);
+    
+    //key_generation
+    
+    // Divide input into left and right halves after initial permutation
+    assign L[0] = ip[0:31];
+    assign R[0] = ip[32:63];
+
+    // Declare wires for intermediate values within each round
+    wire [0:47] exp_out[1:16];   // Expansion P-box output for each round
+    wire [0:47] AK[1:16];        // After XOR with key
+    wire [0:31] SBOX_out[1:16];  // S-box output for each round
+    wire [0:31] SP[1:16];        // Straight P-box output for each round
+
+    // Loop through each of the 16 rounds
+    genvar i;
+    generate
+    /////////////////////////
+        for (i = 1; i <= 16; i = i + 1) begin : DES_rounds
+            // Expansion P-box on the right half of the previous round
+            expansion_pbox Exp(R[i-1], exp_out[i]);
+
+            // XOR with round key
+            assign AK[i] = exp_out[i] ^ (i == 1 ? K1 : 
+                                         i == 2 ? K2 : 
+                                         i == 3 ? K3 : 
+                                         i == 4 ? K4 : 
+                                         i == 5 ? K5 : 
+                                         i == 6 ? K6 : 
+                                         i == 7 ? K7 : 
+                                         i == 8 ? K8 : 
+                                         i == 9 ? K9 : 
+                                         i == 10 ? K10 : 
+                                         i == 11 ? K11 : 
+                                         i == 12 ? K12 : 
+                                         i == 13 ? K13 : 
+                                         i == 14 ? K14 : 
+                                         i == 15 ? K15 : K16);
+
+            // S-Box processing
+            Calculate_SBOX SB(AK[i], SBOX_out[i]);
+
+            // Straight Permutation
+            Straight_permutation SP_perm(SBOX_out[i], SP[i]);
+
+            // Compute the next right half and left half
+            assign L[i] = R[i-1];
+            assign R[i] = L[i-1] ^ SP[i];
+            
+            // Output for each round's result as concatenation of left and right parts      
+        end
+    endgenerate
+
+        // Assign each round's result to its respective output
+    assign Round1Output = {L[1], R[1]};
+    assign Round2Output = {L[2], R[2]};
+    assign Round3Output = {L[3], R[3]};
+    assign Round4Output = {L[4], R[4]};
+    assign Round5Output = {L[5], R[5]};
+    assign Round6Output = {L[6], R[6]};
+    assign Round7Output = {L[7], R[7]};
+    assign Round8Output = {L[8], R[8]};
+    assign Round9Output = {L[9], R[9]};
+    assign Round10Output = {L[10], R[10]};
+    assign Round11Output = {L[11], R[11]};
+    assign Round12Output = {L[12], R[12]};
+    assign Round13Output = {L[13], R[13]};
+    assign Round14Output = {L[14], R[14]};
+    assign Round15Output = {L[15], R[15]};
+    assign Round16Output = {L[16], R[16]};
+    
+    // Final output without the swap of the last round
+    assign Output = {L[16], R[16]};
+    
+endmodule
+
+
 
 module initial_permutation(
     input [0:63] data_in,  // 64-bit input data
@@ -470,7 +567,6 @@ module S1(
     63 : out = 13;
   endcase
 endmodule
-
 module S2(
     input [5:0] in, 
     output reg [3:0] out
@@ -551,7 +647,6 @@ module S2(
     63 : out = 09;
   endcase
 endmodule
-
 module S3(input [5:0] in, output reg [3:0] out);
 
   initial begin
@@ -628,7 +723,6 @@ module S3(input [5:0] in, output reg [3:0] out);
     63 : out = 12;
   endcase
 endmodule
-
 module S4(input [5:0] in, output reg [3:0] out);
 
   initial begin
@@ -704,7 +798,6 @@ module S4(input [5:0] in, output reg [3:0] out);
     63 : out = 14;
   endcase
 endmodule
-
 module S5(input [5:0] in, output reg [3:0] out);
 
   initial begin
@@ -782,7 +875,6 @@ module S5(input [5:0] in, output reg [3:0] out);
     63 : out = 03;
   endcase
 endmodule
-
 module S6(input [5:0] in, output reg [3:0] out);
 
   initial begin
@@ -860,7 +952,6 @@ module S6(input [5:0] in, output reg [3:0] out);
     63 : out = 13;
   endcase
 endmodule
-
 module S7(input [5:0] in, output reg [3:0] out);
 
   initial begin
@@ -937,7 +1028,6 @@ module S7(input [5:0] in, output reg [3:0] out);
     63 : out = 12;
   endcase
 endmodule
-
 module S8(input [5:0] in, output reg [3:0] out);
    initial begin
     out = 4'b0000;  // Initialize out to 0
@@ -1014,7 +1104,6 @@ module S8(input [5:0] in, output reg [3:0] out);
   endcase
 endmodule
 
-
 module Straight_permutation(
     input  [0:31] in,   // 32-bit input
     output [0:31] out   // 32-bit output
@@ -1053,5 +1142,236 @@ module Straight_permutation(
     assign out[30] = in[3];   // 04
     assign out[31] = in[24];  // 25
 endmodule
+
+module key_generation(
+    input [63:0] in,               // Initial 64-bit key with parity bits
+    output reg [47:0] k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, k15, k16 // 48-bit keys for each round
+);
+
+    wire [55:0] cipher_key;        // 56-bit cipher key after parity drop
+    wire [27:0] left, right;        // 28-bit left and right halves of the cipher key for each round
+    wire [27:0] L_CK, R_CK;         // Shifted left and right halves for the current round
+    wire [47:0] round_key [1:16];  // Array to hold 48-bit keys for each round
+
+    // Instantiate the Parity Drop module to generate the 56-bit key from the 64-bit input
+    Parity_Drop parity_drop(in, cipher_key);
+    assign left = cipher_key[55:28]; 
+    assign right = cipher_key[27:0];
+    
+    // Loop through each of the 16 rounds
+    genvar j;
+    generate
+    /////////////////////////
+        for (j = 1; j <= 16; j = j + 1) begin : Key_generation
+             Compression_PBOX_Key cpbox(left,right,round_key[j]);
+             CircularShift CS(j, left,right,L_CK, R_CK);
+            // Update left and right halves after shifting for the next round
+            assign left = L_CK;
+            assign right = R_CK;
+
+            always @(*) begin
+            case (j)
+                1:  assign k1 = round_key[j];
+                2:  assign k2 = round_key[j];
+                3:  assign k3 = round_key[j];
+                4:  assign k4 = round_key[j];
+                5:  assign k5 = round_key[j];
+                6:  assign k6 = round_key[j];
+                7:  assign k7 = round_key[j];
+                8:  assign k8 = round_key[j];
+                9:  assign k9 = round_key[j];
+                10: assign k10 = round_key[j];
+                11: assign k11 = round_key[j];
+                12: assign k12 = round_key[j];
+                13: assign k13 = round_key[j];
+                14: assign k14 = round_key[j];
+                15: assign k15 = round_key[j];
+                16: assign k16 = round_key[j];
+            endcase
+            end
+        end
+    endgenerate
+endmodule
+
+module CircularShift(
+    input [4:0] round,             // Current round number (supports up to 16 rounds)
+    input [27:0] left_in,          // 28-bit left half of the cipher key
+    input [27:0] right_in,         // 28-bit right half of the cipher key
+    output reg [27:0] L_CK,        // Shifted left half
+    output reg [27:0] R_CK         // Shifted right half
+);
+
+    always @(*) begin
+        if (round == 1 || round == 2 || round == 9 || round == 16) begin
+            // 1-bit left circular shift for rounds 1, 2, 9, and 16
+            L_CK = {left_in[26:0], left_in[27]};
+            R_CK = {right_in[26:0], right_in[27]};
+        end else begin
+            // 2-bit left circular shift for other rounds
+            L_CK = {left_in[25:0], left_in[27:26]};
+            R_CK = {right_in[25:0], right_in[27:26]};
+        end
+    end
+
+endmodule
+
+
+
+
+module Parity_Drop(
+    input [0:63] k_PB,  // Key with Parity Bits (64 bits) 
+    output [0:55] C_k   // Cipher Key (56 bits)
+);
+
+    // Assign output bits based on the given table with zero-based indexing
+    assign C_k[0]  = k_PB[56];
+    assign C_k[1]  = k_PB[48];
+    assign C_k[2]  = k_PB[40];
+    assign C_k[3]  = k_PB[32];
+    assign C_k[4]  = k_PB[24];
+    assign C_k[5]  = k_PB[16];
+    assign C_k[6]  = k_PB[8];
+    assign C_k[7]  = k_PB[0];
+    
+    assign C_k[8]  = k_PB[57];
+    assign C_k[9]  = k_PB[49];
+    assign C_k[10] = k_PB[41];
+    assign C_k[11] = k_PB[33];
+    assign C_k[12] = k_PB[25];
+    assign C_k[13] = k_PB[17];
+    assign C_k[14] = k_PB[9];
+    assign C_k[15] = k_PB[1];
+    
+    assign C_k[16] = k_PB[58];
+    assign C_k[17] = k_PB[50];
+    assign C_k[18] = k_PB[42];
+    assign C_k[19] = k_PB[34];
+    assign C_k[20] = k_PB[26];
+    assign C_k[21] = k_PB[18];
+    assign C_k[22] = k_PB[10];
+    assign C_k[23] = k_PB[2];
+    
+    assign C_k[24] = k_PB[59];
+    assign C_k[25] = k_PB[51];
+    assign C_k[26] = k_PB[43];
+    assign C_k[27] = k_PB[35];
+    assign C_k[28] = k_PB[62];
+    assign C_k[29] = k_PB[54];
+    assign C_k[30] = k_PB[46];
+    assign C_k[31] = k_PB[38];
+    
+    assign C_k[32] = k_PB[30];
+    assign C_k[33] = k_PB[22];
+    assign C_k[34] = k_PB[14];
+    assign C_k[35] = k_PB[6];
+    assign C_k[36] = k_PB[61];
+    assign C_k[37] = k_PB[53];
+    assign C_k[38] = k_PB[45];
+    assign C_k[39] = k_PB[37];
+    
+    assign C_k[40] = k_PB[29];
+    assign C_k[41] = k_PB[21];
+    assign C_k[42] = k_PB[13];
+    assign C_k[43] = k_PB[5];
+    assign C_k[44] = k_PB[60];
+    assign C_k[45] = k_PB[52];
+    assign C_k[46] = k_PB[44];
+    assign C_k[47] = k_PB[36];
+    
+    assign C_k[48] = k_PB[28];
+    assign C_k[49] = k_PB[20];
+    assign C_k[50] = k_PB[12];
+    assign C_k[51] = k_PB[4];
+    assign C_k[52] = k_PB[27];
+    assign C_k[53] = k_PB[19];
+    assign C_k[54] = k_PB[11];
+    assign C_k[55] = k_PB[3];
+
+endmodule
+
+
+
+module Compression_PBOX_Key(
+    input [0:27] L_CK,  // Left-shifted C_K (28 bits)
+    input [0:27] R_CK,  // Right-shifted C_K (28 bits)
+    output [0:47] C_k   // Cipher Key (48 bits)
+);
+
+    // Concatenate L_CK and R_CK to form the 56-bit key CK
+    wire [0:55] CK = {L_CK, R_CK};
+
+    // Assign output bits based on the Compression P-box mapping
+    assign C_k[0]  = CK[13];
+    assign C_k[1]  = CK[16];
+    assign C_k[2]  = CK[10];
+    assign C_k[3]  = CK[23];
+    assign C_k[4]  = CK[0];
+    assign C_k[5]  = CK[4];
+    assign C_k[6]  = CK[2];
+    assign C_k[7]  = CK[27];
+    
+    assign C_k[8]  = CK[14];
+    assign C_k[9]  = CK[5];
+    assign C_k[10] = CK[20];
+    assign C_k[11] = CK[9];
+    assign C_k[12] = CK[22];
+    assign C_k[13] = CK[18];
+    assign C_k[14] = CK[11];
+    assign C_k[15] = CK[3];
+    
+    assign C_k[16] = CK[25];
+    assign C_k[17] = CK[7];
+    assign C_k[18] = CK[15];
+    assign C_k[19] = CK[6];
+    assign C_k[20] = CK[26];
+    assign C_k[21] = CK[19];
+    assign C_k[22] = CK[12];
+    assign C_k[23] = CK[1];
+    
+    assign C_k[24] = CK[40];
+    assign C_k[25] = CK[51];
+    assign C_k[26] = CK[30];
+    assign C_k[27] = CK[36];
+    assign C_k[28] = CK[46];
+    assign C_k[29] = CK[54];
+    assign C_k[30] = CK[29];
+    assign C_k[31] = CK[39];
+    
+    assign C_k[32] = CK[50];
+    assign C_k[33] = CK[44];
+    assign C_k[34] = CK[32];
+    assign C_k[35] = CK[47];
+    assign C_k[36] = CK[43];
+    assign C_k[37] = CK[48];
+    assign C_k[38] = CK[38];
+    assign C_k[39] = CK[55];
+    
+    assign C_k[40] = CK[33];
+    assign C_k[41] = CK[52];
+    assign C_k[42] = CK[45];
+    assign C_k[43] = CK[41];
+    assign C_k[44] = CK[49];
+    assign C_k[45] = CK[35];
+    assign C_k[46] = CK[28];
+    assign C_k[47] = CK[31];
+
+endmodule
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
