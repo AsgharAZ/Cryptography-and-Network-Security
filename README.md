@@ -140,4 +140,4 @@ In the theory classes of the Cryptography and Network Security course, I develop
 ## How to Use
 1. Clone the repository:
    ```bash
-   git clone https://github.com/AsgharAZ/Cryptography_Labs.git
+   git clone https://github.com/AsgharAZ/Cryptography-and-Network-Security.git
