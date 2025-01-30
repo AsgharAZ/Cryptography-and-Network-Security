@@ -130,6 +130,7 @@ This repository contains all the labs completed as part of the **Cryptography an
 - Each lab is organized into its respective folder (e.g., `Lab1`, `Lab2`, etc.).
 - Lab folders contain:
   - Configuration files (`.pkt` for Packet Tracer).
+  - Respective Slides that Professor provided us for better understanding
   - Verilog source files (for Labs 10 and 11).
   - Documentation or reports (if applicable).
 
@@ -138,4 +139,4 @@ This repository contains all the labs completed as part of the **Cryptography an
 ## How to Use
 1. Clone the repository:
    ```bash
-   git clone https://github.com/username/repository-name.git
+   git clone https://github.com/AsgharAZ/Cryptography_Labs.git
