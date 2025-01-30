@@ -1,7 +1,6 @@
 # Cryptography and Network Security Labs
 
-This repository contains all the labs completed as part of the **Cryptography and Network Security** course. The labs were primarily implemented using **Cisco Packet Tracer**, except for the **DSA** and **RSA** labs, which were implemented in **Verilog (HDL)**.
-
+This repository contains all the labs, **lectures**, and **assignments** completed as part of the **Cryptography and Network Security** course. The labs were primarily implemented using **Cisco Packet Tracer**, except for the **DSA** and **RSA** labs, which were implemented in **Verilog (HDL)**.
 ---
 
 ## Lab Overview
