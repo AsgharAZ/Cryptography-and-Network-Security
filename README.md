@@ -1,7 +1,9 @@
-# Cryptography and Network Security Labs
+# Cryptography and Network Security Theory and Labs, offered in Habib University
 
 This repository contains all the labs, **lectures**, and **assignments** completed as part of the **Cryptography and Network Security** course. The labs were primarily implemented using **Cisco Packet Tracer**, except for the **DSA** and **RSA** labs, which were implemented in **Verilog (HDL)**.
 ---
+## Theory Overview Overview
+In the theory classes of the Cryptography and Network Security course, I developed a strong foundation in both cryptographic techniques and network security principles. The lectures covered essential security concepts, including goals, attacks, services, and mechanisms, emphasizing the CIA model (Confidentiality, Integrity, and Availability). I learned symmetric-key cryptography through integer algorithms, modular arithmetic, and classical ciphers like substitution, transposition, stream, and block ciphers, followed by modern encryption standards such as DES, Triple DES, and AES. Asymmetric cryptography topics included RSA, Diffie-Hellman, and El Gamal, along with cryptographic hash functions and HMAC. Additionally, I studied digital signatures, entity authentication, and key management strategies. The course also explored network security at various layers, covering protocols like IPsec (AH, ESP), SSL/TLS, and application-layer security mechanisms such as PGP and S/MIME. The theoretical foundation provided a deep understanding of cryptographic algorithms and their role in securing modern communication systems.
 
 ## Lab Overview
 
